@@ -56,7 +56,7 @@ $lokasi = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Nama Lokasi</th>
                                                 <th>Deskripsi</th>
@@ -71,7 +71,7 @@ $lokasi = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php else: ?>
                                                 <?php foreach ($lokasi as $key => $item): ?>
                                                     <tr>
-                                                        <td><?= $key + 1 ?></td>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
                                                         <td><?= $item['nama_lokasi'] ?></td>
                                                         <td><?= $item['deskripsi'] ?: '-' ?></td>
                                                         <td>

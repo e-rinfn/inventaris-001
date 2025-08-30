@@ -56,7 +56,7 @@ $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Nama Supplier</th>
                                                 <th>Alamat</th>
@@ -69,12 +69,12 @@ $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php if (count($suppliers) > 0): ?>
                                                 <?php foreach ($suppliers as $key => $supplier): ?>
                                                     <tr>
-                                                        <td><?= $key + 1 ?></td>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
                                                         <td><?= htmlspecialchars($supplier['nama_supplier']) ?></td>
                                                         <td><?= htmlspecialchars($supplier['alamat']) ?></td>
                                                         <td><?= htmlspecialchars($supplier['no_telepon']) ?></td>
                                                         <td><?= htmlspecialchars($supplier['email']) ?></td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="btn-group btn-group-sm" role="group">
                                                                 <a href="edit.php?id=<?= $supplier['id_supplier'] ?>" class="btn btn-warning" title="Edit">
                                                                     <i class="bx bx-pencil"></i>

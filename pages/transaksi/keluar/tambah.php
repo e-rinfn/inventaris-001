@@ -197,10 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <label for="penerima" class="form-label">Penerima (opsional)</label>
                                             <input type="text" class="form-control" id="penerima" name="penerima">
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="keperluan" class="form-label">Keperluan (opsional)</label>
-                                            <input type="text" class="form-control" id="keperluan" name="keperluan">
-                                        </div>
                                     </div>
 
                                     <div class="mb-3">

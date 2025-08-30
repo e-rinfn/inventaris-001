@@ -177,14 +177,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="penerima" class="form-label">Penerima</label>
-                                            <input type="number" class="form-control" id="penerima" name="penerima" min="0" step="100"
+                                            <input type="text" class="form-control" id="penerima" name="penerima" min="0" step="100"
                                                 value="<?= $data['penerima'] ?>">
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
                                             <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" required
                                                 value="<?= $data['tanggal_keluar'] ?>">
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="mb-3">

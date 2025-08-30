@@ -57,7 +57,7 @@ $kategori = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Nama Kategori</th>
                                                 <th>Deskripsi</th>
@@ -72,10 +72,10 @@ $kategori = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php else: ?>
                                                 <?php foreach ($kategori as $key => $item): ?>
                                                     <tr>
-                                                        <td><?= $key + 1 ?></td>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
                                                         <td><?= $item['nama_kategori'] ?></td>
                                                         <td><?= $item['deskripsi'] ?: '-' ?></td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="btn-group btn-group-sm" role="group">
                                                                 <a href="edit.php?id=<?= $item['id_kategori'] ?>" class="btn btn-warning" title="Edit">
                                                                     <i class="bx bx-pencil"></i>
