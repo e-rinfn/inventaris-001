@@ -113,7 +113,7 @@ $lokasi_list = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAl
                             <div class="card-body mt-3">
 
                                 <form method="GET" class="row g-3">
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         <label for="kategori" class="form-label">Kategori</label>
                                         <select class="form-select" id="kategori" name="kategori">
                                             <option value="">Semua Kategori</option>
@@ -135,7 +135,8 @@ $lokasi_list = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAl
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
+
+                                    <!-- <div class="col-md-2">
                                         <label for="kondisi" class="form-label">Kondisi</label>
                                         <select class="form-select" id="kondisi" name="kondisi">
                                             <option value="">Semua Kondisi</option>
@@ -143,7 +144,8 @@ $lokasi_list = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAl
                                             <option value="rusak_ringan" <?= $kondisi == 'rusak_ringan' ? 'selected' : '' ?>>Rusak Ringan</option>
                                             <option value="rusak_berat" <?= $kondisi == 'rusak_berat' ? 'selected' : '' ?>>Rusak Berat</option>
                                         </select>
-                                    </div>
+                                    </div> -->
+
                                     <div class="col-md-3 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary">
                                             <i class='bx bx-filter-alt'></i> Filter
@@ -200,7 +202,7 @@ $lokasi_list = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAl
                                                 <th>Lokasi</th>
                                                 <th>Stok</th>
                                                 <th>Satuan</th>
-                                                <th>Kondisi</th>
+                                                <!-- <th>Kondisi</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -216,15 +218,15 @@ $lokasi_list = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAl
                                                         <td><?= $item['nama_barang'] ?></td>
                                                         <td><?= $item['nama_kategori'] ?></td>
                                                         <td><?= $item['nama_lokasi'] ?></td>
-                                                        <td><?= $item['stok'] ?></td>
-                                                        <td><?= $item['satuan'] ?></td>
-                                                        <td>
+                                                        <td class="text-center"><?= $item['stok'] ?></td>
+                                                        <td class="text-center"><?= $item['satuan'] ?></td>
+                                                        <!-- <td>
                                                             <span class="badge bg-<?=
                                                                                     $item['kondisi'] == 'baik' ? 'success' : ($item['kondisi'] == 'rusak_ringan' ? 'warning' : 'danger')
                                                                                     ?>">
                                                                 <?= ucfirst($item['kondisi']) ?>
                                                             </span>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>

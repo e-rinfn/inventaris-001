@@ -153,9 +153,9 @@ $html = '<table border="1" cellpadding="4" width="100%">
             <th width="15%">Kode</th>
             <th width="25%">Nama Barang</th>
             <th width="15%">Kategori</th>
-            <th width="15%">Lokasi</th>
+            <th width="30%">Lokasi</th>
             <th width="10%">Stok</th>
-            <th width="15%">Kondisi</th>
+            
         </tr>
     </thead>
     <tbody>';
@@ -169,9 +169,8 @@ if (empty($barang)) {
             <td width="15%" >' . $item['kode_barang'] . '</td>
             <td width="25%" >' . $item['nama_barang'] . '</td>
             <td width="15%" >' . $item['nama_kategori'] . '</td>
-            <td width="15%" >' . $item['nama_lokasi'] . '</td>
+            <td width="30%" >' . $item['nama_lokasi'] . '</td>
             <td width="10%" style="text-align:center;">' . $item['stok'] . ' ' . $item['satuan'] . '</td>
-            <td width="15%" style="text-align:center;">' . ucfirst(str_replace('_', ' ', $item['kondisi'])) . '</td>
         </tr>';
     }
 }

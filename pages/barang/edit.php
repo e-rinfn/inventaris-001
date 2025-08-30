@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <input type="text" class="form-control" id="satuan" name="satuan"
                                                 value="<?= htmlspecialchars($barang['satuan']) ?>" required>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" hidden>
                                             <label for="kondisi" class="form-label">Kondisi*</label>
                                             <select class="form-select" id="kondisi" name="kondisi" required>
                                                 <option value="baik" <?= $barang['kondisi'] == 'baik' ? 'selected' : '' ?>>Baik</option>

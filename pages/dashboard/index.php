@@ -197,8 +197,8 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
               </div>
 
-              <!-- Riwayat inventaris -->
-              <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4">
+              <!-- Stok minimum -->
+              <!-- <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4">
                 <div class="card h-100">
                   <div class="card-header bg-danger text-white">
                     <div class="d-flex justify-content-between align-items-center">
@@ -244,11 +244,11 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> -->
+
+
               <!--/ Riwayat Inventaris -->
-
-
-              <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4">
+              <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
                 <div class="card h-100">
                   <div class="card-header bg-warning text-white">
                     <h5 class="mb-0 text-white"><i class="bi bi-clock-history"></i> Riwayat Transaksi Terakhir</h5>

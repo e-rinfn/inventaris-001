@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <label for="satuan" class="form-label">Satuan*</label>
                                             <input type="text" class="form-control" id="satuan" name="satuan" required value="pcs">
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" hidden>
                                             <label for="kondisi" class="form-label">Kondisi*</label>
                                             <select class="form-select" id="kondisi" name="kondisi" required>
                                                 <option value="baik">Baik</option>
@@ -179,10 +179,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
 
                                     <!-- Upload Gambar -->
-                                    <!-- <div class="mb-3">
+                                    <div class="mb-3">
                                         <label for="gambar" class="form-label">Gambar Barang</label>
                                         <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
-                                    </div> -->
+                                    </div>
 
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bx bx-save"></i> Simpan

@@ -223,12 +223,12 @@ $query .= " ORDER BY b.nama_barang";
                                             <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Kode</th>
-                                                <!-- <th>Gambar</th> -->
+                                                <th>Gambar</th>
                                                 <th>Nama Barang</th>
                                                 <th>Kategori</th>
                                                 <th>Lokasi</th>
                                                 <th>Stok</th>
-                                                <th>Kondisi</th>
+                                                <!-- <th>Kondisi</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -242,27 +242,33 @@ $query .= " ORDER BY b.nama_barang";
                                                     <tr>
                                                         <td><?= ($offset + $key + 1) ?></td>
                                                         <td><?= htmlspecialchars($item['kode_barang']) ?></td>
-                                                        <!-- <td class="text-center">
+                                                        <td class="text-center">
                                                             <?php if (!empty($item['gambar'])): ?>
-                                                                <img src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>"
-                                                                    alt="Gambar Barang"
-                                                                    width="200" style="cursor: pointer; object-fit: cover;"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#imageModal"
-                                                                    data-img-src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>">
+                                                                <div style="width: 200px; height: 150px; padding: 5px; background: #f0f0f0; 
+                                                                            display: flex; align-items: center; justify-content: center; 
+                                                                            margin: auto;">
+                                                                    <img src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>"
+                                                                        alt="Gambar Barang"
+                                                                        style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer;"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#imageModal"
+                                                                        data-img-src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>">
+                                                                </div>
                                                             <?php else: ?>
                                                                 <span class="text-muted">-</span>
                                                             <?php endif; ?>
-                                                        </td> -->
+                                                        </td>
+
+
                                                         <td><?= htmlspecialchars($item['nama_barang']) ?></td>
                                                         <td><?= htmlspecialchars($item['nama_kategori']) ?></td>
                                                         <td><?= htmlspecialchars($item['nama_lokasi']) ?></td>
                                                         <td><?= htmlspecialchars($item['stok']) ?> <?= htmlspecialchars($item['satuan']) ?></td>
-                                                        <td class="text-center">
+                                                        <!-- <td class="text-center">
                                                             <span class="badge bg-<?= $item['kondisi'] == 'baik' ? 'success' : ($item['kondisi'] == 'rusak_ringan' ? 'warning' : 'danger') ?>">
                                                                 <?= ucfirst(htmlspecialchars($item['kondisi'])) ?>
                                                             </span>
-                                                        </td>
+                                                        </td> -->
                                                         <td class="text-center">
                                                             <div class="btn-group btn-group-sm" role="group">
                                                                 <a href="edit.php?id=<?= $item['id_barang'] ?>" class="btn btn-warning" title="Edit">
