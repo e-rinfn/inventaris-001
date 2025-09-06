@@ -39,17 +39,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $kondisi = $_POST['kondisi'];
     $keterangan = $_POST['keterangan'] ?? null;
 
-    // Proses upload gambar jika ada
+    // Proses hapus gambar jika dicentang
     $gambar = $barang['gambar'];
+    if (isset($_POST['hapus_gambar']) && $_POST['hapus_gambar'] == "1") {
+        if ($gambar && file_exists("../../uploads/" . $gambar)) {
+            unlink("../../uploads/" . $gambar); // hapus file fisik
+        }
+        $gambar = null;
+    }
+
+    // Proses upload gambar baru jika ada
     if (!empty($_FILES['gambar']['name'])) {
         $uploadDir = '../../uploads/';
         $fileName = uniqid() . '_' . basename($_FILES['gambar']['name']);
         $targetFilePath = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['gambar']['tmp_name'], $targetFilePath)) {
+            // hapus gambar lama kalau ada
+            if ($barang['gambar'] && file_exists("../../uploads/" . $barang['gambar'])) {
+                unlink("../../uploads/" . $barang['gambar']);
+            }
             $gambar = $fileName;
         }
     }
+
+    // Proses upload gambar jika ada
+    // $gambar = $barang['gambar'];
+    // if (!empty($_FILES['gambar']['name'])) {
+    //     $uploadDir = '../../uploads/';
+    //     $fileName = uniqid() . '_' . basename($_FILES['gambar']['name']);
+    //     $targetFilePath = $uploadDir . $fileName;
+
+    //     if (move_uploaded_file($_FILES['gambar']['tmp_name'], $targetFilePath)) {
+    //         $gambar = $fileName;
+    //     }
+    // }
 
     try {
         $stmt = $pdo->prepare("UPDATE barang SET
@@ -179,6 +203,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             </div>
                                         <?php endif; ?>
                                     </div> -->
+
+                                    <!-- Upload Gambar -->
+                                    <div class="mb-3 d-flex">
+                                        <div class="col-md-3 me-3">
+                                            <label for="gambar" class="form-label">Gambar Barang</label>
+                                            <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*">
+                                        </div>
+                                        <?php if ($barang['gambar']): ?>
+                                            <div class="mt-3 p-2 bg-light border text-center">
+                                                <img src="../../uploads/<?= htmlspecialchars($barang['gambar']) ?>" width="300" alt="Preview Gambar">
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="checkbox" name="hapus_gambar" value="1" id="hapus_gambar">
+                                                    <label class="form-check-label" for="hapus_gambar">Hapus Gambar</label>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+
 
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bx bx-save"></i> Update
