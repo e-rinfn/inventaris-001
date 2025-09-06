@@ -81,8 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="no_telepon" class="form-label">No. Telepon</label>
-                                            <input type="text" class="form-control" id="no_telepon" name="no_telepon">
+                                            <input type="text" class="form-control" id="no_telepon" name="no_telepon"
+                                                oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         </div>
+
                                         <div class="col-md-6">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" name="email">

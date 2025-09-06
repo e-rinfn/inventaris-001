@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Pastikan hanya admin atau user yang membuat yang bisa menghapus
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header('Location: index.php?error=ID tidak valid');
-    exit();
-}
+// if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+//     header('Location: index.php?error=ID tidak valid');
+//     exit();
+// }
 
 $id_kembali = $_GET['id'];
 

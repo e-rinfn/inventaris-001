@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Hanya admin dan staff yang bisa mengupdate status
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    header("Location: ../../../dashboard.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     header("Location: ../../../dashboard.php");
+//     exit();
+// }
 
 if (!isset($_GET['id']) || !isset($_GET['status'])) {
     header("Location: index.php");

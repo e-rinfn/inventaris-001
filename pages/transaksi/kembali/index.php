@@ -121,7 +121,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Tgl Kembali</th>
                                                 <th>Tgl Keluar</th>
@@ -129,7 +129,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                                 <th>Nama Barang</th>
                                                 <th>Jumlah</th>
                                                 <th>Penerima</th>
-                                                <th>Kondisi</th>
+                                                <!-- <th>Kondisi</th> -->
                                                 <th>Operator</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -137,20 +137,20 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                         <tbody>
                                             <?php foreach ($transaksi as $key => $trx): ?>
                                                 <tr>
-                                                    <td><?= $key + 1 ?></td>
+                                                    <td class="text-center"><?= $key + 1 ?></td>
                                                     <td><?= date('d/m/Y', strtotime($trx['tanggal_kembali'])) ?></td>
                                                     <td><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></td>
                                                     <td><?= $trx['kode_barang'] ?></td>
                                                     <td><?= $trx['nama_barang'] ?></td>
                                                     <td><?= $trx['jumlah'] ?></td>
                                                     <td><?= $trx['penerima'] ?? '-' ?></td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <span class="badge bg-<?=
                                                                                 $trx['kondisi'] == 'baik' ? 'success' : ($trx['kondisi'] == 'rusak_ringan' ? 'warning' : 'danger')
                                                                                 ?>">
                                                             <?= ucfirst($trx['kondisi']) ?>
                                                         </span>
-                                                    </td>
+                                                    </td> -->
                                                     <td><?= $trx['operator'] ?></td>
                                                     <td>
                                                         <div class="btn-group btn-group-sm" role="group">
@@ -200,7 +200,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                                                     <div class="col-4 fw-bold">Keperluan</div>
                                                                     <div class="col-8"><?= $trx['keperluan'] ?? '-' ?></div>
                                                                 </div>
-                                                                <div class="row mb-2">
+                                                                <!-- <div class="row mb-2">
                                                                     <div class="col-4 fw-bold">Kondisi</div>
                                                                     <div class="col-8">
                                                                         <span class="badge bg-<?=
@@ -209,7 +209,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                                                             <?= ucfirst($trx['kondisi']) ?>
                                                                         </span>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                                 <div class="row mb-2">
                                                                     <div class="col-4 fw-bold">Keterangan</div>
                                                                     <div class="col-8"><?= $trx['keterangan'] ?? '-' ?></div>

@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Cek role admin atau staff
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    header("Location: ../../dashboard/index.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     header("Location: ../../dashboard/index.php");
+//     exit();
+// }
 
 // Ambil data barang untuk dropdown
 $barang = $pdo->query("SELECT id_barang, kode_barang, nama_barang FROM barang ORDER BY nama_barang")->fetchAll();
@@ -193,10 +193,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <label for="jumlah" class="form-label">Jumlah</label>
                                             <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                             <label for="harga_satuan" class="form-label">Harga Satuan (opsional)</label>
                                             <input type="number" class="form-control" id="harga_satuan" name="harga_satuan" min="0">
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-4">
                                             <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
                                             <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" required

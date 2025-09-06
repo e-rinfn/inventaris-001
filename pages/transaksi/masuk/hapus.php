@@ -3,11 +3,11 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // 1. Validasi Role dan Autentikasi
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    $_SESSION['error'] = "Anda tidak memiliki izin untuk melakukan operasi ini";
-    header("Location: ../../dashboard/index.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     $_SESSION['error'] = "Anda tidak memiliki izin untuk melakukan operasi ini";
+//     header("Location: ../../dashboard/index.php");
+//     exit();
+// }
 
 // 2. Validasi Input ID
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Hanya admin atau staff yang bisa mengakses
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    header("Location: ../../../dashboard.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     header("Location: ../../../dashboard.php");
+//     exit();
+// }
 
 $id_keluar = $_GET['id'] ?? 0;
 
@@ -241,14 +241,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <input type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali"
                                                 value="<?= date('Y-m-d') ?>" required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                             <label for="kondisi" class="form-label">Kondisi Barang</label>
                                             <select class="form-select" id="kondisi" name="kondisi" required>
                                                 <option value="baik">Baik</option>
                                                 <option value="rusak_ringan">Rusak Ringan</option>
                                                 <option value="rusak_berat">Rusak Berat</option>
                                             </select>
-                                        </div>
+                                        </div> -->
                                     </div>
 
                                     <div class="mb-3">

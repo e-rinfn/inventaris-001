@@ -177,14 +177,14 @@ if (!$transaksi) {
                                                 <th>Jumlah</th>
                                                 <td><?= $transaksi['jumlah'] ?></td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <th>Harga Satuan</th>
                                                 <td><?= $transaksi['harga_satuan'] ? 'Rp ' . number_format($transaksi['harga_satuan'], 0, ',', '.') : '-' ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Total Harga</th>
                                                 <td><?= $transaksi['total_harga'] ? 'Rp ' . number_format($transaksi['total_harga'], 0, ',', '.') : '-' ?></td>
-                                            </tr>
+                                            </tr> -->
                                         </table>
                                     </div>
                                 </div>

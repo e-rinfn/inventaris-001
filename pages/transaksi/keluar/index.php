@@ -129,17 +129,17 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC); ?>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Tanggal</th>
-                                                <th>Kode Barang</th>
+                                                <!-- <th>Kode Barang</th> -->
                                                 <th>Nama Barang</th>
-                                                <th>Jumlah</th>
-                                                <th>Dikembalikan</th>
+                                                <th>Jumlah Pinjam</th>
+                                                <th>Jumlah Kembali</th>
                                                 <th>Status</th>
                                                 <th>Penerima</th>
-                                                <th>Keperluan</th>
-                                                <th>Operator</th>
+                                                <!-- <th>Keperluan</th> -->
+                                                <!-- <th>Operator</th> -->
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -150,16 +150,16 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC); ?>
                                                 $status_class = ($trx['jumlah_kembali'] >= $trx['jumlah']) ? 'success' : 'warning';
                                                 ?>
                                                 <tr>
-                                                    <td><?= $key + 1 ?></td>
+                                                    <td class="text-center"><?= $key + 1 ?></td>
                                                     <td><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></td>
-                                                    <td><?= $trx['kode_barang'] ?></td>
+                                                    <!-- <td><?= $trx['kode_barang'] ?></td> -->
                                                     <td><?= $trx['nama_barang'] ?></td>
                                                     <td><?= $trx['jumlah'] ?></td>
                                                     <td><?= $trx['jumlah_kembali'] ?></td>
                                                     <td><span class="badge bg-<?= $status_class ?>"> <?= $status_text ?> </span></td>
                                                     <td><?= $trx['penerima'] ?? '-' ?></td>
-                                                    <td><?= $trx['keperluan'] ?? '-' ?></td>
-                                                    <td><?= $trx['operator'] ?></td>
+                                                    <!-- <td><?= $trx['keperluan'] ?? '-' ?></td> -->
+                                                    <!-- <td><?= $trx['operator'] ?></td> -->
                                                     <td>
                                                         <div class="btn-group btn-group-sm" role="group">
                                                             <a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal<?= $trx['id_keluar'] ?>" title="Detail">

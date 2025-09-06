@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Cek role admin atau staff
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    header("Location: ../../dashboard/index.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     header("Location: ../../dashboard/index.php");
+//     exit();
+// }
 
 // Ambil data barang untuk dropdown
 $barang = $pdo->query("SELECT id_barang, kode_barang, nama_barang, stok FROM barang WHERE stok > 0 ORDER BY nama_barang")->fetchAll();

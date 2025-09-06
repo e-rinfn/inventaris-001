@@ -81,7 +81,7 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Tanggal</th>
                                                 <th>Barang</th>
@@ -95,7 +95,7 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <tbody>
                                             <?php foreach ($barang_hilang as $key => $item): ?>
                                                 <tr>
-                                                    <td><?= $key + 1 ?></td>
+                                                    <td class="text-center"><?= $key + 1 ?></td>
                                                     <td><?= date('d/m/Y', strtotime($item['tanggal_hilang'])) ?></td>
                                                     <td><?= htmlspecialchars($item['kode_barang']) ?> - <?= htmlspecialchars($item['nama_barang']) ?></td>
                                                     <td><?= $item['jumlah'] ?></td>
@@ -109,7 +109,7 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     </td>
                                                     <td><?= htmlspecialchars(substr($item['keterangan'], 0, 50)) . (strlen($item['keterangan']) > 50 ? '...' : '') ?></td>
                                                     <td>
-                                                        <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'staff'): ?>
+                                                        <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'guru'): ?>
                                                             <div class="btn-group btn-group-sm" role="group">
                                                                 <?php if ($item['status'] == 'dilaporkan'): ?>
                                                                     <a href="update_status.php?id=<?= $item['id_hilang'] ?>&status=ditemukan"

@@ -3,10 +3,10 @@ require_once '../../../includes/auth_check.php';
 require_once '../../../config/database.php';
 
 // Hanya admin dan staff yang bisa menghapus
-if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
-    header("Location: ../../dashboard/index.php");
-    exit();
-}
+// if ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'staff') {
+//     header("Location: ../../dashboard/index.php");
+//     exit();
+// }
 
 // Pastikan ID ada
 if (!isset($_GET['id'])) {

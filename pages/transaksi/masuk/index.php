@@ -130,15 +130,15 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>No</th>
                                                 <th>Tanggal</th>
                                                 <th>Kode Barang</th>
                                                 <th>Nama Barang</th>
                                                 <th>Jumlah</th>
                                                 <th>Supplier</th>
-                                                <th>Harga Satuan</th>
-                                                <th>Total</th>
+                                                <!-- <th>Harga Satuan</th> -->
+                                                <!-- <th>Total</th> -->
                                                 <th>Input Oleh</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -146,14 +146,14 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                         <tbody>
                                             <?php foreach ($transaksi as $key => $item): ?>
                                                 <tr>
-                                                    <td><?= $key + 1 ?></td>
+                                                    <td class="text-center"><?= $key + 1 ?></td>
                                                     <td><?= date('d/m/Y', strtotime($item['tanggal_masuk'])) ?></td>
                                                     <td><?= $item['kode_barang'] ?></td>
                                                     <td><?= $item['nama_barang'] ?></td>
                                                     <td><?= $item['jumlah'] ?></td>
                                                     <td><?= $item['nama_supplier'] ?? '-' ?></td>
-                                                    <td><?= $item['harga_satuan'] ? 'Rp ' . number_format($item['harga_satuan'], 0, ',', '.') : '-' ?></td>
-                                                    <td><?= $item['total_harga'] ? 'Rp ' . number_format($item['total_harga'], 0, ',', '.') : '-' ?></td>
+                                                    <!-- <td><?= $item['harga_satuan'] ? 'Rp ' . number_format($item['harga_satuan'], 0, ',', '.') : '-' ?></td> -->
+                                                    <!-- <td><?= $item['total_harga'] ? 'Rp ' . number_format($item['total_harga'], 0, ',', '.') : '-' ?></td> -->
                                                     <td><?= $item['nama_lengkap'] ?></td>
                                                     <td>
                                                         <div class="btn-group btn-group-sm" role="group">
