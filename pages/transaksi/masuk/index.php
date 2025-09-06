@@ -81,6 +81,13 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
     <script src="../../../assets/js/config.js"></script>
 </head>
 
+<style>
+    /* Paksa SweetAlert berada di atas segalanya */
+    .swal2-container {
+        z-index: 99999 !important;
+    }
+</style>
+
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -144,38 +151,47 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($transaksi as $key => $item): ?>
+                                            <?php if (empty($transaksi)): ?>
                                                 <tr>
-                                                    <td class="text-center"><?= $key + 1 ?></td>
-                                                    <td><?= date('d/m/Y', strtotime($item['tanggal_masuk'])) ?></td>
-                                                    <td><?= $item['kode_barang'] ?></td>
-                                                    <td><?= $item['nama_barang'] ?></td>
-                                                    <td><?= $item['jumlah'] ?></td>
-                                                    <td><?= $item['nama_supplier'] ?? '-' ?></td>
-                                                    <!-- <td><?= $item['harga_satuan'] ? 'Rp ' . number_format($item['harga_satuan'], 0, ',', '.') : '-' ?></td> -->
-                                                    <!-- <td><?= $item['total_harga'] ? 'Rp ' . number_format($item['total_harga'], 0, ',', '.') : '-' ?></td> -->
-                                                    <td><?= $item['nama_lengkap'] ?></td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm" role="group">
-                                                            <a href="detail.php?id=<?= $item['id_masuk'] ?>" class="btn btn-info" title="Detail">
-                                                                <i class="bx bx-info-circle"></i>
-                                                            </a>
-                                                            <?php if ($_SESSION['role'] === 'admin' || $_SESSION['id_pengguna'] === $item['id_pengguna']): ?>
-                                                                <a href="edit.php?id=<?= $item['id_masuk'] ?>" class="btn btn-warning" title="Edit">
-                                                                    <i class="bx bx-pencil"></i>
-                                                                </a>
-                                                                <a href="hapus.php?id=<?= $item['id_masuk'] ?>" class="btn btn-danger" title="Hapus"
-                                                                    onclick="return confirm('Yakin ingin menghapus transaksi ini?')">
-                                                                    <i class="bx bx-trash"></i>
-                                                                </a>
-                                                            <?php endif; ?>
-                                                        </div>
+                                                    <td colspan="8" class="text-center text-muted">
+                                                        <em>Tidak ada data barang masuk</em>
                                                     </td>
-
                                                 </tr>
-                                            <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <?php foreach ($transaksi as $key => $item): ?>
+                                                    <tr>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
+                                                        <td><?= date('d/m/Y', strtotime($item['tanggal_masuk'])) ?></td>
+                                                        <td><?= $item['kode_barang'] ?></td>
+                                                        <td><?= $item['nama_barang'] ?></td>
+                                                        <td><?= $item['jumlah'] ?></td>
+                                                        <td><?= $item['nama_supplier'] ?? '-' ?></td>
+                                                        <!-- <td><?= $item['harga_satuan'] ? 'Rp ' . number_format($item['harga_satuan'], 0, ',', '.') : '-' ?></td> -->
+                                                        <!-- <td><?= $item['total_harga'] ? 'Rp ' . number_format($item['total_harga'], 0, ',', '.') : '-' ?></td> -->
+                                                        <td><?= $item['nama_lengkap'] ?></td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm" role="group">
+                                                                <a href="detail.php?id=<?= $item['id_masuk'] ?>" class="btn btn-info" title="Detail">
+                                                                    <i class="bx bx-info-circle"></i>
+                                                                </a>
+                                                                <?php if ($_SESSION['role'] === 'admin' || $_SESSION['id_pengguna'] === $item['id_pengguna']): ?>
+                                                                    <a href="edit.php?id=<?= $item['id_masuk'] ?>" class="btn btn-warning" title="Edit">
+                                                                        <i class="bx bx-pencil"></i>
+                                                                    </a>
+                                                                    <a href="hapus.php?id=<?= $item['id_masuk'] ?>"
+                                                                        class="btn btn-danger btn-delete"
+                                                                        title="Hapus">
+                                                                        <i class="bx bx-trash"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -196,6 +212,36 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
 
         <!-- Core JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.btn-delete');
+
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = this.getAttribute('href');
+
+                        Swal.fire({
+                            title: 'Apakah Anda yakin?',
+                            text: "Yakin ingin menghapus barang masuk ini?.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = url;
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
+
         <!-- build:js assets/vendor/js/core.js -->
         <script src="../../../assets/vendor/libs/jquery/jquery.js"></script>
         <script src="../../../assets/vendor/libs/popper/popper.js"></script>

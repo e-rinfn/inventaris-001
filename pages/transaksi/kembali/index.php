@@ -82,6 +82,13 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
     <script src="../../../assets/js/config.js"></script>
 </head>
 
+<style>
+    /* Paksa SweetAlert berada di atas segalanya */
+    .swal2-container {
+        z-index: 99999 !important;
+    }
+</style>
+
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -135,95 +142,88 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($transaksi as $key => $trx): ?>
-                                                <tr>
-                                                    <td class="text-center"><?= $key + 1 ?></td>
-                                                    <td><?= date('d/m/Y', strtotime($trx['tanggal_kembali'])) ?></td>
-                                                    <td><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></td>
-                                                    <td><?= $trx['kode_barang'] ?></td>
-                                                    <td><?= $trx['nama_barang'] ?></td>
-                                                    <td><?= $trx['jumlah'] ?></td>
-                                                    <td><?= $trx['penerima'] ?? '-' ?></td>
-                                                    <!-- <td>
-                                                        <span class="badge bg-<?=
-                                                                                $trx['kondisi'] == 'baik' ? 'success' : ($trx['kondisi'] == 'rusak_ringan' ? 'warning' : 'danger')
-                                                                                ?>">
-                                                            <?= ucfirst($trx['kondisi']) ?>
-                                                        </span>
-                                                    </td> -->
-                                                    <td><?= $trx['operator'] ?></td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm" role="group">
-                                                            <a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal<?= $trx['id_kembali'] ?>" title="Detail">
-                                                                <i class="bx bx-info-circle"></i>
-                                                            </a>
-                                                            <?php if ($_SESSION['role'] === 'admin' || $_SESSION['id_pengguna'] === $trx['id_pengguna']): ?>
-                                                                <a href="hapus.php?id=<?= $trx['id_kembali'] ?>" class="btn btn-danger" title="Hapus"
-                                                                    onclick="return confirm('Yakin ingin menghapus data pengembalian ini? Stok barang akan dikurangi kembali.')">
-                                                                    <i class="bx bx-trash"></i>
+                                            <?php if (!empty($transaksi)): ?>
+                                                <?php foreach ($transaksi as $key => $trx): ?>
+                                                    <tr>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
+                                                        <td><?= date('d/m/Y', strtotime($trx['tanggal_kembali'])) ?></td>
+                                                        <td><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></td>
+                                                        <td><?= $trx['kode_barang'] ?></td>
+                                                        <td><?= $trx['nama_barang'] ?></td>
+                                                        <td><?= $trx['jumlah'] ?></td>
+                                                        <td><?= $trx['penerima'] ?? '-' ?></td>
+                                                        <td><?= $trx['operator'] ?></td>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm" role="group">
+                                                                <a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal<?= $trx['id_kembali'] ?>" title="Detail">
+                                                                    <i class="bx bx-info-circle"></i>
                                                                 </a>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                                <?php if ($_SESSION['role'] === 'admin' || $_SESSION['id_pengguna'] === $trx['id_pengguna']): ?>
+                                                                    <a href="hapus.php?id=<?= $trx['id_kembali'] ?>"
+                                                                        class="btn btn-danger btn-delete"
+                                                                        title="Hapus">
+                                                                        <i class="bx bx-trash"></i>
+                                                                    </a>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
 
-                                                <!-- Modal Detail -->
-                                                <div class="modal fade" id="detailModal<?= $trx['id_kembali'] ?>" tabindex="-1">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Detail Barang Kembali</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Tanggal Kembali</div>
-                                                                    <div class="col-8"><?= date('d/m/Y', strtotime($trx['tanggal_kembali'])) ?></div>
+                                                    <!-- Modal Detail -->
+                                                    <div class="modal fade" id="detailModal<?= $trx['id_kembali'] ?>" tabindex="-1">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Detail Barang Kembali</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                                 </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Tanggal Keluar</div>
-                                                                    <div class="col-8"><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Barang</div>
-                                                                    <div class="col-8"><?= $trx['kode_barang'] ?> - <?= $trx['nama_barang'] ?></div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Jumlah</div>
-                                                                    <div class="col-8"><?= $trx['jumlah'] ?></div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Penerima</div>
-                                                                    <div class="col-8"><?= $trx['penerima'] ?? '-' ?></div>
-                                                                </div>
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Keperluan</div>
-                                                                    <div class="col-8"><?= $trx['keperluan'] ?? '-' ?></div>
-                                                                </div>
-                                                                <!-- <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Kondisi</div>
-                                                                    <div class="col-8">
-                                                                        <span class="badge bg-<?=
-                                                                                                $trx['kondisi'] == 'baik' ? 'success' : ($trx['kondisi'] == 'rusak_ringan' ? 'warning' : 'danger')
-                                                                                                ?>">
-                                                                            <?= ucfirst($trx['kondisi']) ?>
-                                                                        </span>
+                                                                <div class="modal-body">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Tanggal Kembali</div>
+                                                                        <div class="col-8"><?= date('d/m/Y', strtotime($trx['tanggal_kembali'])) ?></div>
                                                                     </div>
-                                                                </div> -->
-                                                                <div class="row mb-2">
-                                                                    <div class="col-4 fw-bold">Keterangan</div>
-                                                                    <div class="col-8"><?= $trx['keterangan'] ?? '-' ?></div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Tanggal Keluar</div>
+                                                                        <div class="col-8"><?= date('d/m/Y', strtotime($trx['tanggal_keluar'])) ?></div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Barang</div>
+                                                                        <div class="col-8"><?= $trx['kode_barang'] ?> - <?= $trx['nama_barang'] ?></div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Jumlah</div>
+                                                                        <div class="col-8"><?= $trx['jumlah'] ?></div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Penerima</div>
+                                                                        <div class="col-8"><?= $trx['penerima'] ?? '-' ?></div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Keperluan</div>
+                                                                        <div class="col-8"><?= $trx['keperluan'] ?? '-' ?></div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-4 fw-bold">Keterangan</div>
+                                                                        <div class="col-8"><?= $trx['keterangan'] ?? '-' ?></div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            <?php endforeach; ?>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="9" class="text-center text-muted">
+                                                        <em>Belum ada data transaksi barang kembali.</em>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -244,6 +244,35 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
 
         <!-- Core JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.btn-delete');
+
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const url = this.getAttribute('href');
+
+                        Swal.fire({
+                            title: 'Apakah Anda yakin?',
+                            text: "Yakin ingin menghapus barang kembali ini?.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = url;
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+
         <!-- build:js assets/vendor/js/core.js -->
         <script src="../../../assets/vendor/libs/jquery/jquery.js"></script>
         <script src="../../../assets/vendor/libs/popper/popper.js"></script>

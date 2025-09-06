@@ -44,6 +44,13 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="../../../assets/js/config.js"></script>
 </head>
 
+<style>
+    /* Paksa SweetAlert berada di atas segalanya */
+    .swal2-container {
+        z-index: 99999 !important;
+    }
+</style>
+
 <body>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -93,55 +100,55 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($barang_hilang as $key => $item): ?>
-                                                <tr>
-                                                    <td class="text-center"><?= $key + 1 ?></td>
-                                                    <td><?= date('d/m/Y', strtotime($item['tanggal_hilang'])) ?></td>
-                                                    <td><?= htmlspecialchars($item['kode_barang']) ?> - <?= htmlspecialchars($item['nama_barang']) ?></td>
-                                                    <td><?= $item['jumlah'] ?></td>
-                                                    <td><?= htmlspecialchars($item['nama_lengkap']) ?></td>
-                                                    <td>
-                                                        <span class="badge bg-<?=
-                                                                                $item['status'] == 'dilaporkan' ? 'warning' : ($item['status'] == 'ditemukan' ? 'success' : ($item['status'] == 'dikembalikan' ? 'info' : 'secondary'))
-                                                                                ?>">
-                                                            <?= ucfirst($item['status']) ?>
-                                                        </span>
-                                                    </td>
-                                                    <td><?= htmlspecialchars(substr($item['keterangan'], 0, 50)) . (strlen($item['keterangan']) > 50 ? '...' : '') ?></td>
-                                                    <td>
-                                                        <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'guru'): ?>
-                                                            <div class="btn-group btn-group-sm" role="group">
-                                                                <?php if ($item['status'] == 'dilaporkan'): ?>
-                                                                    <a href="update_status.php?id=<?= $item['id_hilang'] ?>&status=ditemukan"
-                                                                        class="btn btn-success"
-                                                                        title="Tandai ditemukan"
-                                                                        onclick="return confirm('Apakah Anda yakin ingin menandai barang ini sebagai ditemukan?')">
-                                                                        <i class="bx bx-check-circle"></i>
+                                            <?php if (!empty($barang_hilang)): ?>
+                                                <?php foreach ($barang_hilang as $key => $item): ?>
+                                                    <tr>
+                                                        <td class="text-center"><?= $key + 1 ?></td>
+                                                        <td><?= date('d/m/Y', strtotime($item['tanggal_hilang'])) ?></td>
+                                                        <td><?= htmlspecialchars($item['kode_barang']) ?> - <?= htmlspecialchars($item['nama_barang']) ?></td>
+                                                        <td><?= $item['jumlah'] ?></td>
+                                                        <td><?= htmlspecialchars($item['nama_lengkap']) ?></td>
+                                                        <td>
+                                                            <span class="badge bg-<?=
+                                                                                    $item['status'] == 'dilaporkan' ? 'warning' : ($item['status'] == 'ditemukan' ? 'success' : ($item['status'] == 'dikembalikan' ? 'info' : 'secondary'))
+                                                                                    ?>">
+                                                                <?= ucfirst($item['status']) ?>
+                                                            </span>
+                                                        </td>
+                                                        <td><?= htmlspecialchars(substr($item['keterangan'], 0, 50)) . (strlen($item['keterangan']) > 50 ? '...' : '') ?></td>
+                                                        <td>
+                                                            <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'guru'): ?>
+                                                                <div class="btn-group btn-group-sm" role="group">
+                                                                    <?php if ($item['status'] == 'dilaporkan'): ?>
+                                                                        <a href="update_status.php?id=<?= $item['id_hilang'] ?>&status=ditemukan"
+                                                                            class="btn btn-success"
+                                                                            title="Tandai ditemukan"
+                                                                            onclick="return confirm('Apakah Anda yakin ingin menandai barang ini sebagai ditemukan?')">
+                                                                            <i class="bx bx-check-circle"></i>
+                                                                        </a>
+                                                                    <?php endif; ?>
+
+                                                                    <!-- Tombol Hapus -->
+                                                                    <a href="hapus.php?id=<?= $item['id_hilang'] ?>"
+                                                                        class="btn btn-danger btn-delete"
+                                                                        title="Hapus">
+                                                                        <i class="bx bx-trash"></i>
                                                                     </a>
-                                                                <?php endif; ?>
-
-                                                                <!-- <a href="update_status.php?id=<?= $item['id_hilang'] ?>&status=ditutup"
-                                                                    class="btn btn-secondary"
-                                                                    title="Tutup laporan"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menutup laporan ini?')">
-                                                                    <i class="bx bx-x-circle"></i>
-                                                                </a> -->
-
-                                                                <!-- Tombol Hapus -->
-                                                                <a href="hapus.php?id=<?= $item['id_hilang'] ?>"
-                                                                    class="btn btn-danger"
-                                                                    title="Hapus laporan"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini? Data yang dihapus tidak dapat dikembalikan.')">
-                                                                    <i class="bx bx-trash"></i>
-                                                                </a>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="8" class="text-center text-muted">
+                                                        <em>Belum ada data barang hilang.</em>
                                                     </td>
-
                                                 </tr>
-                                            <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -156,6 +163,35 @@ $barang_hilang = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Yakin ingin menghapus barang kembali ini?.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
     <script src="../../../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../../../assets/vendor/libs/popper/popper.js"></script>
     <script src="../../../assets/vendor/js/bootstrap.js"></script>
