@@ -16,6 +16,14 @@ $pengguna = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include '../../includes/header.php'; ?>
 
+<style>
+    /* Paksa SweetAlert berada di atas segalanya */
+    .swal2-container {
+        z-index: 99999 !important;
+    }
+</style>
+
+
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -90,7 +98,9 @@ $pengguna = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                             <i class="bx bx-pencil"></i>
                                                         </a>
                                                         <?php if ($user['id_pengguna'] != $_SESSION['id_pengguna']): ?>
-                                                            <a href="hapus.php?id=<?= $user['id_pengguna'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
+                                                            <a href="hapus.php?id=<?= $user['id_pengguna'] ?>"
+                                                                class="btn btn-sm btn-danger btn-delete"
+                                                                title="Hapus">
                                                                 <i class="bx bx-trash"></i>
                                                             </a>
                                                         <?php endif; ?>
@@ -117,6 +127,35 @@ $pengguna = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+
+            deleteButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Yakin ingin menghapus pengguna ini?.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 
     <?php include '../../includes/footer.php'; ?>

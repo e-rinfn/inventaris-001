@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         </div>
                                         <div class="col-md-6">
                                             <label for="keterangan" class="form-label">Keterangan (opsional)</label>
-                                            <textarea class="form-control" id="keterangan" name="keterangan" rows="1"></textarea>
+                                            <textarea class="form-control" id="keterangan" name="keterangan" rows="1" required></textarea>
                                         </div>
                                     </div>
 
