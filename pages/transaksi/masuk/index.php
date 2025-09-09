@@ -143,7 +143,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                                 <th>Kode Barang</th>
                                                 <th>Nama Barang</th>
                                                 <th>Jumlah</th>
-                                                <th>Supplier</th>
+                                                <!-- <th>Supplier</th> -->
                                                 <!-- <th>Harga Satuan</th> -->
                                                 <!-- <th>Total</th> -->
                                                 <th>Input Oleh</th>
@@ -165,7 +165,7 @@ $transaksi = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
                                                         <td><?= $item['kode_barang'] ?></td>
                                                         <td><?= $item['nama_barang'] ?></td>
                                                         <td><?= $item['jumlah'] ?></td>
-                                                        <td><?= $item['nama_supplier'] ?? '-' ?></td>
+                                                        <!-- <td><?= $item['nama_supplier'] ?? '-' ?></td> -->
                                                         <!-- <td><?= $item['harga_satuan'] ? 'Rp ' . number_format($item['harga_satuan'], 0, ',', '.') : '-' ?></td> -->
                                                         <!-- <td><?= $item['total_harga'] ? 'Rp ' . number_format($item['total_harga'], 0, ',', '.') : '-' ?></td> -->
                                                         <td><?= $item['nama_lengkap'] ?></td>

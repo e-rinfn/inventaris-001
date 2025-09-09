@@ -69,7 +69,7 @@ function isActive($path)
             <div data-i18n="Without menu">Lokasi</div>
           </a>
         </li>
-        <li class="menu-item <?= isActive('/supplier') ?>">
+        <li class="menu-item <?= isActive('/supplier') ?>" hidden>
           <a href="<?= $base_url ?>/pages/supplier/index.php" class="menu-link">
             <div data-i18n="Without navbar">Supplier</div>
           </a>

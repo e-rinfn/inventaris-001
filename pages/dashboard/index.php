@@ -251,7 +251,7 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
               <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
                 <div class="card h-100">
                   <div class="card-header bg-warning text-white">
-                    <h5 class="mb-0 text-white"><i class="bi bi-clock-history"></i> Riwayat Transaksi Terakhir</h5>
+                    <h5 class="mb-0 text-white"><i class="bi bi-clock-history"></i> Aktivitas Terakhir</h5>
                   </div>
                   <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                     <div class="timeline mt-3">

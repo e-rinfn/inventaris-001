@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" hidden>
                                             <label for="id_supplier" class="form-label">Supplier (opsional)</label>
                                             <select class="form-select" id="id_supplier" name="id_supplier">
                                                 <option value="">Pilih Supplier</option>
@@ -239,20 +239,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
-                                    </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="jumlah" class="form-label">Jumlah</label>
                                             <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required
                                                 value="<?= $transaksi['jumlah'] ?>">
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="harga_satuan" class="form-label">Harga Satuan (opsional)</label>
-                                            <input type="number" class="form-control" id="harga_satuan" name="harga_satuan" min="0" step="100"
-                                                value="<?= $transaksi['harga_satuan'] ?>">
-                                        </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
                                             <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" required
                                                 value="<?= $transaksi['tanggal_masuk'] ?>">
@@ -260,12 +253,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
 
                                     <div class="row mb-3">
-                                        <div class="col-md-6">
+
+
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6" hidden>
                                             <label for="no_faktur" class="form-label">No. Faktur (opsional)</label>
                                             <input type="text" class="form-control" id="no_faktur" name="no_faktur"
                                                 value="<?= $transaksi['no_faktur'] ?>">
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="keterangan" class="form-label">Keterangan (opsional)</label>
                                             <input type="text" class="form-control" id="keterangan" name="keterangan"
                                                 value="<?= $transaksi['keterangan'] ?>">

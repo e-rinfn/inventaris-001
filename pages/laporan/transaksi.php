@@ -250,7 +250,7 @@ $barang_list = $pdo->query("SELECT id_barang, kode_barang, nama_barang FROM bara
 
                     <div class="container-xxl flex-grow-1 container-p-y">
 
-                        <h2>Laporan Transaksi Barang</h2>
+                        <h2>Laporan Inventaris Barang</h2>
 
                         <div class="card mb-4">
                             <div class="card-header bg-warning text-white">
@@ -259,7 +259,7 @@ $barang_list = $pdo->query("SELECT id_barang, kode_barang, nama_barang FROM bara
                             <div class="card-body mt-3">
                                 <form method="GET" class="row g-3">
                                     <div class="col-md-2">
-                                        <label for="jenis" class="form-label">Jenis Transaksi</label>
+                                        <label for="jenis" class="form-label">Jenis Inventaris</label>
                                         <select class="form-select" id="jenis" name="jenis">
                                             <option value="">Semua Jenis</option>
                                             <option value="masuk" <?= $jenis == 'masuk' ? 'selected' : '' ?>>Barang Masuk</option>
@@ -327,7 +327,7 @@ $barang_list = $pdo->query("SELECT id_barang, kode_barang, nama_barang FROM bara
                                                 <th>Nama Barang</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
-                                                <th>Pemasok/Penerima</th>
+                                                <th>Penerima</th>
                                                 <th>Operator</th>
                                             </tr>
                                         </thead>

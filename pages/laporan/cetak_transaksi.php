@@ -238,7 +238,7 @@ $pdf->AddPage();
 
 // Report title
 $pdf->SetFont('times', 'B', 14);
-$pdf->Cell(0, 10, 'LAPORAN TRANSAKSI BARANG', 0, 1, 'C');
+$pdf->Cell(0, 10, 'LAPORAN INVENTARIS BARANG', 0, 1, 'C');
 $pdf->SetFont('times', '', 11);
 $pdf->Cell(0, 6, 'Periode: ' . date('d F Y', strtotime($tanggal_awal)) . ' - ' . date('d F Y', strtotime($tanggal_akhir)), 0, 1, 'C');
 
@@ -277,7 +277,7 @@ $html = '<table border="1" cellpadding="4" width="100%">
             <th width="15%">Nama Barang</th>
             <th width="10%">Kategori</th>
             <th width="15%">Jenis Transaksi</th>
-            <th width="10%">Pemasok/Penerima</th>
+            <th width="10%">Penerima</th>
             <th width="10%">Jumlah</th>
             <th width="15%">Keterangan</th>
         </tr>
