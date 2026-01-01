@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Login Inventaris Barang SMP Bugelan</title>
+  <title>Login Inventaris Barang Sekolah</title>
 
   <meta name="description" content="" />
 
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <img src="../../assets/img/Logo.png" width="100px" alt="Bakery Logo" class="mx-auto d-block mb-3">
           <div class="text-center">
             <div class="app-brand-link d-block">
-              <span class="text-body fw-bolder fs-3">INVENTARIS BARANG <br> SMP Terpadu Bugelan</span>
+              <span class="text-body fw-bolder fs-3">INVENTARIS BARANG <br> Sekolah</span>
             </div>
           </div>
           <hr>
