@@ -19,7 +19,7 @@ function isActive($path)
       <span class="app-brand-logo demo">
         <img src="<?= $base_url ?>/assets/img/Logo.png" alt="Logo" width="50" height="50">
       </span>
-      <span class="menu-text fw-medium fs-6 ms-2">Inventaris Barang SMP Terpadu Bugelan</span>
+      <span class="menu-text fw-medium fs-6 ms-2">Inventaris Barang "Nama Instansi"</span>
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

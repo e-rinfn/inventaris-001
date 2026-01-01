@@ -3,6 +3,8 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   require_once '../../config/database.php';
+  require_once "../../core/license.php";
+
 
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -32,7 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $error = "Terjadi kesalahan: " . $e->getMessage();
   }
 }
+
 ?>
+
+
 
 
 <!DOCTYPE html>

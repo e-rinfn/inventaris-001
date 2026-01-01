@@ -95,31 +95,29 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
               <div class="col-lg-5 mb-4 order-0">
-                <div class="card">
-                  <div class="d-flex align-items-end row">
-                    <div class="col-sm-12">
-                      <div class="card-body">
-                        <h5 class="card-title text-warning">Selamat datang, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</h5>
-                        <hr>
-                        <div class="d-flex justify-content-end">
-                          <img src="<?= $base_url ?>/assets/img/illustrations/InventoryManagement.jpg" width="250px" alt="">
-                        </div>
-                        <p class="mb-3 mt-3" style="text-align: justify; text-indent: 30px;">
-                          Aplikasi inventaris barang adalah sebuah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan memantau
-                          data barang secara efisien, mulai dari pencatatan data barang, transaksi masuk dan keluar, hingga pelaporan stok.
-                        </p>
-                        <p class="mb-4" style="text-align: justify; text-indent: 30px;">
-                          Sistem ini dikembangkan khusus untuk mendukung kebutuhan <strong>SMP Terpadu Bugelan Tasikmalaya</strong> dalam mengelola inventaris secara tertib dan terorganisir.
-                        </p>
-                      </div>
+                <style>
+                  /* Efek hover untuk semua card */
+                  .card {
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                  }
 
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  .card:hover {
+                    /* transform: translateY(-6px); */
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                    cursor: pointer;
+                  }
 
-              <!-- Card -->
-              <div class="col-lg-7 col-md-4 order-1">
+                  /* Tambahan efek kecil untuk icon di dalam card */
+                  .card:hover .avatar i {
+                    transform: scale(1.1);
+                    transition: transform 0.2s ease;
+                  }
+
+                  .avatar i {
+                    transition: transform 0.2s ease;
+                  }
+                </style>
+
                 <div class="row">
 
                   <!-- Total Barang -->
@@ -131,7 +129,7 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
                             <i class="bx bx-package fs-2 text-primary"></i>
                           </div>
                         </div>
-                        <span class="fw-semibold d-block mb-1">Total Jenis Barang</span>
+                        <span class="fw-semibold d-block mb-1">Total Jenis</span>
                         <h3 class="card-title mb-2"><?= $total_barang ?></h3>
                       </div>
                       <div class="card-footer bg-transparent border-top-0">
@@ -193,67 +191,16 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
 
-              <!-- Stok minimum -->
-              <!-- <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4">
-                <div class="card h-100">
-                  <div class="card-header bg-danger text-white">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-0 text-white"><i class="bi bi-exclamation-triangle"></i> Stok Minimum</h5>
-                      <span class="badge bg-white text-danger"><?= count($stok_minimum) ?> item</span>
-                    </div>
+              <!-- Card -->
+              <div class="col-lg-7 col-md-4 order-1">
+                <div class="card">
+                  <div class="card-header bg-info">
+                    <h5 class="mb-0 text-white text-center">Aktivitas Terakhir</h5>
                   </div>
-                  <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                    <?php if (count($stok_minimum) > 0): ?>
-                      <div class="table-responsive">
-                        <table class="table table-sm table-hover">
-                          <thead>
-                            <tr>
-                              <th>No</th>
-                              <th>Nama Barang</th>
-                              <th>Kategori</th>
-                              <th>Stok</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php foreach ($stok_minimum as $key => $item): ?>
-                              <tr>
-                                <td><?= $key + 1 ?></td>
-                                <td><?= htmlspecialchars($item['nama_barang']) ?></td>
-                                <td><?= htmlspecialchars($item['nama_kategori']) ?></td>
-                                <td>
-                                  <span class="badge bg-danger"><?= $item['stok'] ?> <?= $item['satuan'] ?></span>
-                                </td>
-                              </tr>
-                            <?php endforeach; ?>
-                          </tbody>
-                        </table>
-                      </div>
-                    <?php else: ?>
-                      <div class="alert alert-success mt-3 mb-0">
-                        <i class="bi bi-check-circle"></i> Tidak ada barang dengan stok minimum
-                      </div>
-                    <?php endif; ?>
-                  </div>
-                  <div class="card-footer">
-                    <a href="<?= $base_url ?>/pages/barang/index.php" class="btn btn-sm btn-outline-danger">
-                      Lihat Semua <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
-                </div>
-              </div> -->
-
-
-              <!--/ Riwayat Inventaris -->
-              <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
-                <div class="card h-100">
-                  <div class="card-header bg-warning text-white">
-                    <h5 class="mb-0 text-white"><i class="bi bi-clock-history"></i> Aktivitas Terakhir</h5>
-                  </div>
-                  <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                  <div class="card-body" style="max-height: 450px; overflow-y: auto;">
                     <div class="timeline mt-3">
                       <?php foreach ($riwayat_transaksi as $transaksi): ?>
                         <div class="timeline-item">
@@ -284,10 +231,36 @@ $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
                       <?php endforeach; ?>
                     </div>
                   </div>
-                  <div class="card-footer">
-                    <a href="<?= $base_url ?>/pages/laporan/transaksi.php" class="btn btn-sm btn-outline-primary">
-                      Lihat Semua <i class="bi bi-arrow-right"></i>
+                  <div class="card-footer text-end">
+                    <a href="<?= $base_url ?>/pages/laporan/transaksi.php" class="btn btn-outline-info">
+                      Lihat Laporan <i class="bi bi-arrow-right"></i>
                     </a>
+                  </div>
+                </div>
+              </div>
+
+              <!--/ Riwayat Inventaris -->
+              <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
+                <hr>
+                <div class="card">
+                  <div class="d-flex align-items-end row">
+                    <div class="col-sm-12">
+                      <div class="card-body">
+                        <h5 class="card-title text-warning">Selamat datang, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</h5>
+                        <hr>
+                        <!-- <div class="d-flex justify-content-end">
+                          <img src="<?= $base_url ?>/assets/img/illustrations/InventoryManagement.jpg" width="250px" alt="">
+                        </div> -->
+                        <p class="mb-3 mt-3" style="text-align: justify; text-indent: 30px;">
+                          Sistem inventaris barang adalah sebuah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan memantau
+                          data barang secara efisien, mulai dari pencatatan data barang, transaksi masuk dan keluar, hingga pelaporan stok.
+                        </p>
+                        <p class="mb-4" style="text-align: justify; text-indent: 30px;">
+                          Sistem ini dikembangkan khusus untuk mendukung kebutuhan <strong>"NAMA INSTANSI"</strong> dalam mengelola inventaris secara tertib dan terorganisir.
+                        </p>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </div>

@@ -169,7 +169,7 @@ $query .= " ORDER BY b.nama_barang";
                             <div class="d-flex justify-content-between">
 
                                 <!-- Add this new row for filters -->
-                                <div class="col-md-2 mt-2">
+                                <div class="col-md-3 mt-2">
                                     <select name="limit" class="form-select" onchange="this.form.submit()">
                                         <?php foreach ($limitOptions as $opt): ?>
                                             <option value="<?= $opt ?>" <?= $limit == $opt ? 'selected' : '' ?>>Tampilkan <?= $opt ?> data</option>
