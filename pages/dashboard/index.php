@@ -1,320 +1,168 @@
 <?php
 require_once '../../includes/auth_check.php';
 require_once '../../config/database.php';
-require_once '../../includes/functions.php';
-
 
 // Hitung total barang
-$query_barang = "SELECT COUNT(*) as total FROM barang";
-$total_barang = $pdo->query($query_barang)->fetchColumn();
+$total_barang = $pdo->query("SELECT COUNT(*) FROM barang")->fetchColumn();
 
 // Hitung total kategori
-$query_kategori = "SELECT COUNT(*) as total FROM kategori";
-$total_kategori = $pdo->query($query_kategori)->fetchColumn();
+$total_kategori = $pdo->query("SELECT COUNT(*) FROM kategori")->fetchColumn();
 
+// Hitung total lokasi
+$total_lokasi = $pdo->query("SELECT COUNT(*) FROM lokasi")->fetchColumn();
 
-
-// Hitung total transaksi bulan ini
+// Hitung transaksi hari ini
 $query_transaksi = "SELECT 
-  (SELECT COUNT(*) FROM barang_masuk WHERE DATE(tanggal_masuk) = CURDATE()) as masuk,
-  (SELECT COUNT(*) FROM barang_keluar WHERE DATE(tanggal_keluar) = CURDATE()) as keluar,
-  (SELECT COUNT(*) FROM barang_hilang WHERE DATE(tanggal_hilang) = CURDATE()) as hilang";
-
+    (SELECT COUNT(*) FROM barang_masuk WHERE DATE(tanggal_masuk) = CURDATE()) as masuk,
+    (SELECT COUNT(*) FROM barang_keluar WHERE DATE(tanggal_keluar) = CURDATE()) as keluar,
+    (SELECT COUNT(*) FROM barang_hilang WHERE DATE(tanggal_hilang) = CURDATE()) as hilang";
 $transaksi = $pdo->query($query_transaksi)->fetch(PDO::FETCH_ASSOC);
 
-// Ambil data stok minimum (barang yang stoknya kurang dari 5)
-$query_stok_minimum = "SELECT b.nama_barang, b.stok, b.satuan, k.nama_kategori 
-                       FROM barang b
-                       JOIN kategori k ON b.id_kategori = k.id_kategori
-                       WHERE b.stok < 5
-                       ORDER BY b.stok ASC
-                       LIMIT 5";
-$stok_minimum = $pdo->query($query_stok_minimum)->fetchAll(PDO::FETCH_ASSOC);
+// Barang stok minimum
+$stok_minimum = $pdo->query("SELECT b.nama_barang, b.stok, b.satuan, k.nama_kategori 
+                             FROM barang b
+                             JOIN kategori k ON b.id_kategori = k.id_kategori
+                             WHERE b.stok < 5
+                             ORDER BY b.stok ASC
+                             LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 
-// Ambil riwayat transaksi terakhir
+// Riwayat transaksi terakhir
 $query_riwayat = "SELECT 
-                    'masuk' as jenis, bm.tanggal_masuk as tanggal, b.nama_barang, bm.jumlah, 
-                    CONCAT('Dari: ', IFNULL(s.nama_supplier, '-')) as detail, u.nama_lengkap as operator
+                    'masuk' as jenis, bm.tanggal_masuk as tanggal, b.nama_barang, bm.jumlah, u.nama_lengkap as operator
                   FROM barang_masuk bm
                   JOIN barang b ON bm.id_barang = b.id_barang
-                  LEFT JOIN supplier s ON bm.id_supplier = s.id_supplier
                   JOIN pengguna u ON bm.id_pengguna = u.id_pengguna
-                  
                   UNION ALL
-                  
                   SELECT 
-                    'keluar' as jenis, bk.tanggal_keluar as tanggal, b.nama_barang, bk.jumlah, 
-                    CONCAT('Untuk: ', IFNULL(bk.penerima, '-')) as detail, u.nama_lengkap as operator
+                    'keluar' as jenis, bk.tanggal_keluar as tanggal, b.nama_barang, bk.jumlah, u.nama_lengkap as operator
                   FROM barang_keluar bk
                   JOIN barang b ON bk.id_barang = b.id_barang
                   JOIN pengguna u ON bk.id_pengguna = u.id_pengguna
-                  
                   UNION ALL
-                  
                   SELECT 
-                    'hilang' as jenis, bh.tanggal_hilang as tanggal, b.nama_barang, bh.jumlah, 
-                    CONCAT('Keterangan: ', IFNULL(bh.keterangan, '-')) as detail, u.nama_lengkap as operator
+                    'hilang' as jenis, bh.tanggal_hilang as tanggal, b.nama_barang, bh.jumlah, u.nama_lengkap as operator
                   FROM barang_hilang bh
                   JOIN barang b ON bh.id_barang = b.id_barang
                   JOIN pengguna u ON bh.id_pengguna = u.id_pengguna
-                  
                   ORDER BY tanggal DESC
-                  LIMIT 7";
+                  LIMIT 10";
 $riwayat_transaksi = $pdo->query($query_riwayat)->fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
 
 <?php include '../../includes/header.php'; ?>
+<?php include '../../includes/sidebar.php'; ?>
 
-<body>
-  <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
+<div class="main-content">
+  <?php include '../../includes/navbar.php'; ?>
 
-      <!-- Menu -->
+  <h2 class="mb-2">Dashboard</h2>
 
-      <?php include '../../includes/sidebar.php'; ?>
-
-      <!-- / Menu -->
-
-      <!-- Layout container -->
-      <div class="layout-page">
-
-        <!-- Navbar -->
-
-        <?php include '../../includes/navbar.php'; ?>
-
-
-        <!-- / Navbar -->
-
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
-          <!-- Content -->
-
-          <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="row">
-              <div class="col-lg-5 mb-4 order-0">
-                <style>
-                  /* Efek hover untuk semua card */
-                  .card {
-                    transition: transform 0.25s ease, box-shadow 0.25s ease;
-                  }
-
-                  .card:hover {
-                    /* transform: translateY(-6px); */
-                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-                    cursor: pointer;
-                  }
-
-                  /* Tambahan efek kecil untuk icon di dalam card */
-                  .card:hover .avatar i {
-                    transform: scale(1.1);
-                    transition: transform 0.2s ease;
-                  }
-
-                  .avatar i {
-                    transition: transform 0.2s ease;
-                  }
-                </style>
-
-                <div class="row">
-
-                  <!-- Total Barang -->
-                  <div class="col-6 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                          <div class="avatar flex-shrink-0">
-                            <i class="bx bx-package fs-2 text-primary"></i>
-                          </div>
-                        </div>
-                        <span class="fw-semibold d-block mb-1">Total Jenis</span>
-                        <h3 class="card-title mb-2"><?= $total_barang ?></h3>
-                      </div>
-                      <div class="card-footer bg-transparent border-top-0">
-                        <a href="../barang/index.php" class="text-dark stretched-link">Lihat detail</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Total Kategori -->
-                  <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                          <div class="avatar flex-shrink-0">
-                            <i class="bx bx-list-check fs-2 text-secondary"></i>
-                          </div>
-                        </div>
-                        <span class="fw-semibold d-block mb-1">Total Kategori</span>
-                        <h3 class="card-title mb-2"><?= $total_kategori ?></h3>
-                      </div>
-                      <div class="card-footer bg-transparent border-top-0">
-                        <a href="../kategori/index.php" class="text-dark stretched-link">Lihat detail</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Barang Masuk Hari Ini -->
-                  <div class="col-6 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                          <div class="avatar flex-shrink-0">
-                            <i class="bx bx-import fs-2 text-success"></i>
-                          </div>
-                        </div>
-                        <span class="fw-semibold d-block mb-1">Barang Masuk Hari Ini</span>
-                        <h3 class="card-title mb-2"><?= $transaksi['masuk'] ?></h3>
-                      </div>
-                      <div class="card-footer bg-transparent border-top-0">
-                        <a href="../transaksi/masuk/index.php" class="text-dark stretched-link">Lihat detail</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Barang Keluar Hari Ini -->
-                  <div class="col-lg-6 col-md-12 col-6 mb-4">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-title d-flex align-items-start justify-content-between">
-                          <div class="avatar flex-shrink-0">
-                            <i class="bx bx-export fs-2 text-warning"></i>
-                          </div>
-                        </div>
-                        <span class="fw-semibold d-block mb-1">Barang Keluar Hari Ini</span>
-                        <h3 class="card-title mb-2"><?= $transaksi['keluar'] ?></h3>
-                      </div>
-                      <div class="card-footer bg-transparent border-top-0">
-                        <a href="../laporan/transaksi.php" class="text-dark stretched-link">Lihat detail</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card -->
-              <div class="col-lg-7 col-md-4 order-1">
-                <div class="card">
-                  <div class="card-header bg-info">
-                    <h5 class="mb-0 text-white text-center">Aktivitas Terakhir</h5>
-                  </div>
-                  <div class="card-body" style="max-height: 450px; overflow-y: auto;">
-                    <div class="timeline mt-3">
-                      <?php foreach ($riwayat_transaksi as $transaksi): ?>
-                        <div class="timeline-item">
-                          <div class="timeline-icon 
-                                <?= $transaksi['jenis'] == 'masuk' ? 'bg-success' : ($transaksi['jenis'] == 'keluar' ? 'bg-warning text-dark' : 'bg-danger') ?>">
-                            <i class="bi 
-                                    <?= $transaksi['jenis'] == 'masuk' ? 'bi-box-arrow-in-down' : ($transaksi['jenis'] == 'keluar' ? 'bi-box-arrow-up' : 'bi-exclamation-triangle') ?>">
-                            </i>
-                          </div>
-                          <div class="timeline-content">
-                            <div class="d-flex justify-content-between">
-                              <h6 class="mb-1"><?= htmlspecialchars($transaksi['nama_barang']) ?></h6>
-                              <small class="text-muted"><?= date('d M Y ', strtotime($transaksi['tanggal'])) ?></small>
-                            </div>
-                            <p class="mb-1">
-                              <span class="badge 
-                                        <?= $transaksi['jenis'] == 'masuk' ? 'bg-success' : ($transaksi['jenis'] == 'keluar' ? 'bg-warning text-dark' : 'bg-danger') ?>">
-                                <?= $transaksi['jenis'] == 'masuk' ? 'Masuk' : ($transaksi['jenis'] == 'keluar' ? 'Keluar' : 'Hilang') ?>
-                              </span>
-                              <span class="ms-2"><?= $transaksi['jumlah'] ?> unit</span>
-                            </p>
-                            <small class="text-muted">
-                              <?= htmlspecialchars($transaksi['detail']) ?> •
-                              Oleh: <?= htmlspecialchars($transaksi['operator']) ?>
-                            </small>
-                          </div>
-                        </div>
-                      <?php endforeach; ?>
-                    </div>
-                  </div>
-                  <div class="card-footer text-end">
-                    <a href="<?= $base_url ?>/pages/laporan/transaksi.php" class="btn btn-outline-info">
-                      Lihat Laporan <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!--/ Riwayat Inventaris -->
-              <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
-                <hr>
-                <div class="card">
-                  <div class="d-flex align-items-end row">
-                    <div class="col-sm-12">
-                      <div class="card-body">
-                        <h5 class="card-title text-warning">Selamat datang, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</h5>
-                        <hr>
-                        <!-- <div class="d-flex justify-content-end">
-                          <img src="<?= $base_url ?>/assets/img/illustrations/InventoryManagement.jpg" width="250px" alt="">
-                        </div> -->
-                        <p class="mb-3 mt-3" style="text-align: justify; text-indent: 30px;">
-                          Sistem inventaris barang adalah sebuah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan memantau
-                          data barang secara efisien, mulai dari pencatatan data barang, transaksi masuk dan keluar, hingga pelaporan stok.
-                        </p>
-                        <p class="mb-4" style="text-align: justify; text-indent: 30px;">
-                          Sistem ini dikembangkan khusus untuk mendukung kebutuhan <strong>"NAMA INSTANSI"</strong> dalam mengelola inventaris secara tertib dan terorganisir.
-                        </p>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <!-- / Content -->
-
-          <div class="content-backdrop fade"></div>
-        </div>
-        <!-- Content wrapper -->
+  <!-- Statistik -->
+  <div class="row">
+    <div class="col-4">
+      <div class="stat-card">
+        <h4>Total Jenis Barang</h4>
+        <div class="number"><?= $total_barang ?></div>
+        <a href="../barang/index.php">Lihat detail →</a>
       </div>
-      <!-- / Layout page -->
     </div>
-
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+    <div class="col-4">
+      <div class="stat-card">
+        <h4>Total Kategori</h4>
+        <div class="number"><?= $total_kategori ?></div>
+        <a href="../kategori/index.php">Lihat detail →</a>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="stat-card">
+        <h4>Total Lokasi</h4>
+        <div class="number"><?= $total_lokasi ?></div>
+        <a href="../lokasi/index.php">Lihat detail →</a>
+      </div>
+    </div>
   </div>
-  <!-- / Layout wrapper -->
 
+  <!-- Transaksi Hari Ini -->
+  <div class="card">
+    <div class="card-title">Transaksi Hari Ini</div>
+    <div class="row">
+      <div class="col-4">
+        <strong>Barang Masuk:</strong> <?= $transaksi['masuk'] ?? 0 ?>
+      </div>
+      <div class="col-4">
+        <strong>Barang Keluar:</strong> <?= $transaksi['keluar'] ?? 0 ?>
+      </div>
+      <div class="col-4">
+        <strong>Barang Hilang:</strong> <?= $transaksi['hilang'] ?? 0 ?>
+      </div>
+    </div>
+  </div>
 
-  <style>
-    /* Timeline Style */
-    .timeline {
-      position: relative;
-      padding-left: 1rem;
-    }
+  <div class="row">
+    <!-- Stok Minimum -->
+    <div class="col-6">
+      <div class="card">
+        <div class="card-title">Stok Minimum (< 5)</div>
+            <?php if (empty($stok_minimum)): ?>
+              <p>Tidak ada barang dengan stok minimum</p>
+            <?php else: ?>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Barang</th>
+                    <th>Kategori</th>
+                    <th>Stok</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($stok_minimum as $item): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($item['nama_barang']) ?></td>
+                      <td><?= htmlspecialchars($item['nama_kategori']) ?></td>
+                      <td><?= $item['stok'] ?> <?= $item['satuan'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            <?php endif; ?>
+        </div>
+      </div>
 
-    .timeline-item {
-      position: relative;
-      padding-bottom: 1.5rem;
-      padding-left: 2rem;
-      border-left: 1px solid #dee2e6;
-    }
-
-    .timeline-item:last-child {
-      padding-bottom: 0;
-    }
-
-    .timeline-icon {
-      position: absolute;
-      left: -1rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-    }
-
-    .timeline-content {
-      padding: 0.5rem 0;
-    }
-  </style>
+      <!-- Riwayat Transaksi -->
+      <div class="col-6">
+        <div class="card">
+          <div class="card-title">Riwayat Transaksi Terakhir</div>
+          <?php if (empty($riwayat_transaksi)): ?>
+            <p>Belum ada transaksi</p>
+          <?php else: ?>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Jenis</th>
+                  <th>Barang</th>
+                  <th>Jumlah</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($riwayat_transaksi as $item): ?>
+                  <tr>
+                    <td><?= date('d/m/Y', strtotime($item['tanggal'])) ?></td>
+                    <td>
+                      <span class="badge badge-<?= $item['jenis'] == 'masuk' ? 'success' : ($item['jenis'] == 'keluar' ? 'warning' : 'danger') ?>">
+                        <?= ucfirst($item['jenis']) ?>
+                      </span>
+                    </td>
+                    <td><?= htmlspecialchars($item['nama_barang']) ?></td>
+                    <td><?= $item['jumlah'] ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <?php include '../../includes/footer.php'; ?>

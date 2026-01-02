@@ -35,6 +35,17 @@ try {
     }
 
     // 3. Jika tidak ada transaksi, langsung hapus
+    // Hapus gambar jika ada
+    $stmt = $pdo->prepare("SELECT gambar FROM barang WHERE id_barang = ?");
+    $stmt->execute([$id_barang]);
+    $barang = $stmt->fetch();
+    if ($barang && $barang['gambar']) {
+        $uploadDir = dirname(__DIR__, 2) . '/uploads/';
+        if (file_exists($uploadDir . $barang['gambar'])) {
+            unlink($uploadDir . $barang['gambar']);
+        }
+    }
+
     $stmt = $pdo->prepare("DELETE FROM barang WHERE id_barang = ?");
     $stmt->execute([$id_barang]);
 
