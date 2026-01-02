@@ -106,7 +106,7 @@ $allLokasi = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAll(
                 <tr>
                     <th>No</th>
                     <th>Kode</th>
-                    <th>Gambar</th>
+                    <!-- <th>Gambar</th> -->
                     <th>Nama Barang</th>
                     <th>Kategori</th>
                     <th>Lokasi</th>
@@ -124,13 +124,13 @@ $allLokasi = $pdo->query("SELECT * FROM lokasi ORDER BY nama_lokasi")->fetchAll(
                         <tr>
                             <td><?= ($offset + $key + 1) ?></td>
                             <td><?= htmlspecialchars($item['kode_barang']) ?></td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <?php if (!empty($item['gambar'])): ?>
                                     <img src="../../uploads/<?= htmlspecialchars($item['gambar']) ?>" class="img-thumbnail" alt="Gambar">
                                 <?php else: ?>
                                     <span>-</span>
                                 <?php endif; ?>
-                            </td>
+                            </td> -->
                             <td><?= htmlspecialchars($item['nama_barang']) ?></td>
                             <td><?= htmlspecialchars($item['nama_kategori']) ?></td>
                             <td><?= htmlspecialchars($item['nama_lokasi']) ?></td>

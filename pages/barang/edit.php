@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <textarea class="form-control" id="keterangan" name="keterangan" rows="3"><?= htmlspecialchars($barang['keterangan']) ?></textarea>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="gambar">Gambar Barang</label>
                 <?php if ($barang['gambar']): ?>
                     <div class="mb-1">
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 <?php endif; ?>
                 <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
-            </div>
+            </div> -->
 
             <input type="hidden" name="kondisi" value="<?= htmlspecialchars($barang['kondisi']) ?>">
 
