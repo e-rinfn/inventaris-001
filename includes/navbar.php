@@ -1,8 +1,6 @@
 <div class="navbar">
     <div class="navbar-left">
-        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Sidebar">
-            <span class="toggle-icon">☰</span>
-        </button>
+
         <strong>Sistem Inventaris Barang</strong>
     </div>
     <div class="user-info">
