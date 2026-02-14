@@ -168,9 +168,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   </div>
                 </div> -->
               <div class="mb-3">
-                <button type="submit" class="btn btn-warning d-grid w-100" type="submit">Login</button>
+                <button type="submit" class="btn btn-warning d-grid w-100">Login</button>
+              </div>
+              <div class="mb-3">
+                <button type="button" class="btn btn-outline-secondary d-grid w-100" onclick="demoLogin()">
+                  Demo Login
+                </button>
               </div>
             </form>
+
+            <script>
+              function demoLogin() {
+                document.getElementById('username').value = 'superadmin';
+                document.getElementById('password').value = 'superadmin';
+                document.getElementById('formAuthentication').submit();
+              }
+            </script>
 
             <!-- <p class="text-center">
                 <span>New on our platform?</span>
