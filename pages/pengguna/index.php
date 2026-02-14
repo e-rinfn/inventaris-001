@@ -53,7 +53,7 @@ $pengguna = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h2>Data Pengguna</h2>
-                            <a href="tambah.php" class="btn btn-primary">
+                            <a href="tambah.php" class="disabled btn btn-primary">
                                 <i class="bx bx-plus-circle"></i> Tambah Pengguna
                             </a>
                         </div>
@@ -94,12 +94,12 @@ $pengguna = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     </td>
                                                     <td><?= $user['terakhir_login'] ? date('d/m/Y H:i', strtotime($user['terakhir_login'])) : 'Belum pernah' ?></td>
                                                     <td>
-                                                        <a href="edit.php?id=<?= $user['id_pengguna'] ?>" class="btn btn-sm btn-warning">
+                                                        <a href="edit.php?id=<?= $user['id_pengguna'] ?>" class="disabled btn btn-sm btn-warning">
                                                             <i class="bx bx-pencil"></i>
                                                         </a>
                                                         <?php if ($user['id_pengguna'] != $_SESSION['id_pengguna']): ?>
                                                             <a href="hapus.php?id=<?= $user['id_pengguna'] ?>"
-                                                                class="btn btn-sm btn-danger btn-delete"
+                                                                class="disabled btn btn-sm btn-danger btn-delete"
                                                                 title="Hapus">
                                                                 <i class="bx bx-trash"></i>
                                                             </a>

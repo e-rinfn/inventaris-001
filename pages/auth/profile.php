@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
 
                                             <div class="d-grid gap-2">
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="submit" class="disabled btn btn-primary">
                                                     <i class="bi bi-save"></i> Simpan Perubahan
                                                 </button>
                                             </div>
